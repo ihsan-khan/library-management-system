@@ -47,3 +47,11 @@ class Loan(models.Model):
 
     def __str__(self):
         return f"{self.book.title} loaned to {self.member.first_name} {self.member.last_name}"
+    
+class Fine(models.Model):
+    loan = models.ForeignKey(Loan, on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=6, decimal_places=2)
+    paid = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Fine for {self.loan.member.first_name} {self.loan.member.last_name}: ${self.amount}"
