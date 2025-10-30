@@ -37,3 +37,13 @@ class Member(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+    
+class Loan(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    member = models.ForeignKey(Member, on_delete=models.CASCADE)
+    issue_date = models.DateField(auto_now_add=True)
+    return_date = models.DateField(null=True, blank=True)
+    due_date = models.DateField()
+
+    def __str__(self):
+        return f"{self.book.title} loaned to {self.member.first_name} {self.member.last_name}"
