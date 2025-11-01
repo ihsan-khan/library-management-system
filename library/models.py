@@ -5,7 +5,7 @@ class Book(models.Model):
     title = models.CharField(max_length=200)
     author = models.ForeignKey('Author', on_delete=models.CASCADE)
     isbn = models.CharField(max_length=13, unique=True)
-    category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True)
+    category = models.ManyToManyField('Category')
     publisher = models.CharField(max_length=100)
     published_date = models.DateField()
     total_copies = models.PositiveIntegerField()
