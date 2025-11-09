@@ -1,0 +1,314 @@
+{% extends 'library/base.html' %}
+
+{% block title %}Dashboard - Library Management System{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="mb-0">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </h1>
+                    <p class="mb-0 mt-2">Welcome to your Library Management System</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <h4 class="mb-0">{{ "now"|date:"F j, Y" }}</h4>
+                    <p class="mb-0">{{ "now"|date:"l, g:i A" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card stat-card books h-100">
+                <div class="card-body text-center">
+                    <div class="row align-items-center">
+                        <div class="col-4">
+                            <i class="bi bi-book-fill" style="font-size: 3rem;"></i>
+                        </div>
+                        <div class="col-8">
+                            <h2 class="card-title mb-0">{{ total_books }}</h2>
+                            <p class="card-text mb-0">Total Books</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <a href="{% url 'book_list' %}" class="btn btn-light btn-sm w-100">
+                        <i class="bi bi-arrow-right"></i> View All Books
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card stat-card members h-100">
+                <div class="card-body text-center">
+                    <div class="row align-items-center">
+                        <div class="col-4">
+                            <i class="bi bi-people-fill" style="font-size: 3rem;"></i>
+                        </div>
+                        <div class="col-8">
+                            <h2 class="card-title mb-0">{{ total_members }}</h2>
+                            <p class="card-text mb-0">Active Members</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <a href="{% url 'member_list' %}" class="btn btn-light btn-sm w-100">
+                        <i class="bi bi-arrow-right"></i> View All Members
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card stat-card loans h-100">
+                <div class="card-body text-center">
+                    <div class="row align-items-center">
+                        <div class="col-4">
+                            <i class="bi bi-arrow-left-right" style="font-size: 3rem;"></i>
+                        </div>
+                        <div class="col-8">
+                            <h2 class="card-title mb-0">{{ active_loans }}</h2>
+                            <p class="card-text mb-0">Active Loans</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <a href="{% url 'loan_list' %}" class="btn btn-light btn-sm w-100">
+                        <i class="bi bi-arrow-right"></i> View All Loans
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card stat-card overdue h-100">
+                <div class="card-body text-center">
+                    <div class="row align-items-center">
+                        <div class="col-4">
+                            <i class="bi bi-exclamation-triangle-fill" style="font-size: 3rem;"></i>
+                        </div>
+                        <div class="col-8">
+                            <h2 class="card-title mb-0">{{ overdue_loans }}</h2>
+                            <p class="card-text mb-0">Overdue Books</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <a href="{% url 'overdue_loans' %}" class="btn btn-light btn-sm w-100">
+                        <i class="bi bi-arrow-right"></i> View Overdue
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-lightning-fill"></i> Quick Actions
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+                            <a href="{% url 'book_add' %}" class="btn btn-outline-primary btn-custom w-100">
+                                <i class="bi bi-plus-circle d-block mb-2" style="font-size: 2rem;"></i>
+                                Add Book
+                            </a>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+                            <a href="{% url 'member_add' %}" class="btn btn-outline-success btn-custom w-100">
+                                <i class="bi bi-person-plus d-block mb-2" style="font-size: 2rem;"></i>
+                                Add Member
+                            </a>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+                            <a href="{% url 'loan_issue' %}" class="btn btn-outline-info btn-custom w-100">
+                                <i class="bi bi-arrow-up-circle d-block mb-2" style="font-size: 2rem;"></i>
+                                Issue Book
+                            </a>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+                            <a href="{% url 'loan_return' %}" class="btn btn-outline-warning btn-custom w-100">
+                                <i class="bi bi-arrow-down-circle d-block mb-2" style="font-size: 2rem;"></i>
+                                Return Book
+                            </a>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+                            <a href="{% url 'book_list' %}" class="btn btn-outline-secondary btn-custom w-100">
+                                <i class="bi bi-search d-block mb-2" style="font-size: 2rem;"></i>
+                                Search Books
+                            </a>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+                            <a href="{% url 'overdue_loans' %}" class="btn btn-outline-danger btn-custom w-100">
+                                <i class="bi bi-exclamation-triangle d-block mb-2" style="font-size: 2rem;"></i>
+                                View Overdue
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Activities & Popular Books -->
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-clock-history"></i> Recent Loans
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if recent_loans %}
+                        <div class="list-group list-group-flush">
+                            {% for loan in recent_loans %}
+                                <div class="list-group-item border-0 px-0">
+                                    <div class="row align-items-center">
+                                        <div class="col-8">
+                                            <h6 class="mb-1">{{ loan.book.title }}</h6>
+                                            <small class="text-muted">
+                                                <i class="bi bi-person"></i> {{ loan.member.first_name }} {{ loan.member.last_name }}
+                                            </small>
+                                        </div>
+                                        <div class="col-4 text-end">
+                                            <small class="text-muted">{{ loan.issue_date|date:"M j" }}</small>
+                                            {% if loan.due_date < "now"|date:"Y-m-d" %}
+                                                <br><span class="badge bg-danger">Overdue</span>
+                                            {% else %}
+                                                <br><span class="badge bg-success">Active</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted text-center mb-0">No recent loans found.</p>
+                    {% endif %}
+                </div>
+                <div class="card-footer bg-transparent">
+                    <a href="{% url 'loan_list' %}" class="btn btn-sm btn-outline-success">
+                        View All Loans <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-star-fill"></i> Popular Books
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if popular_books %}
+                        <div class="list-group list-group-flush">
+                            {% for book in popular_books %}
+                                <div class="list-group-item border-0 px-0">
+                                    <div class="row align-items-center">
+                                        <div class="col-8">
+                                            <h6 class="mb-1">{{ book.title }}</h6>
+                                            <small class="text-muted">
+                                                <i class="bi bi-person"></i> {{ book.author.name }}
+                                            </small>
+                                        </div>
+                                        <div class="col-4 text-end">
+                                            <span class="badge bg-primary">{{ book.loan_count }} loans</span>
+                                            <br>
+                                            {% if book.available_copies > 0 %}
+                                                <small class="text-success">Available</small>
+                                            {% else %}
+                                                <small class="text-danger">Out of stock</small>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted text-center mb-0">No popular books data available.</p>
+                    {% endif %}
+                </div>
+                <div class="card-footer bg-transparent">
+                    <a href="{% url 'book_list' %}" class="btn btn-sm btn-outline-info">
+                        View All Books <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Returns -->
+    {% if recent_returns %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">
+                        <i class="bi bi-arrow-return-left"></i> Recent Returns
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for return in recent_returns %}
+                            <div class="col-lg-4 col-md-6 mb-3">
+                                <div class="card border-left-success">
+                                    <div class="card-body py-2">
+                                        <div class="row align-items-center">
+                                            <div class="col-8">
+                                                <h6 class="mb-0">{{ return.book.title|truncatechars:30 }}</h6>
+                                                <small class="text-muted">{{ return.member.first_name }} {{ return.member.last_name }}</small>
+                                            </div>
+                                            <div class="col-4 text-end">
+                                                <small class="text-muted">{{ return.return_date|date:"M j" }}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .border-left-success {
+        border-left: 4px solid #28a745 !important;
+    }
+    
+    .card-body .row.align-items-center {
+        min-height: 60px;
+    }
+    
+    @media (max-width: 768px) {
+        .stat-card h2 {
+            font-size: 1.5rem;
+        }
+        
+        .quick-action-btn {
+            margin-bottom: 10px;
+        }
+    }
+</style>
+{% endblock %}

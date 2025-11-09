@@ -1,0 +1,38 @@
+{% extends 'library/base.html' %}
+
+{% block title %}Add Member - Library Management System{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="page-header">
+        <div class="container-fluid">
+            <h1 class="mb-0">
+                <i class="bi bi-person-plus"></i> Register New Member
+            </h1>
+            <p class="mb-0 mt-2">Add a new member to your library</p>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Member Information</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-center text-muted">
+                        <i class="bi bi-tools" style="font-size: 3rem;"></i><br>
+                        Member registration form will be implemented here<br>
+                        This is a placeholder template for the add member functionality.
+                    </p>
+                    <div class="text-center">
+                        <a href="{% url 'member_list' %}" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Back to Members
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

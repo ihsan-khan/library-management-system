@@ -1,13 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>
-    Welcome to the Library Management System
-    </h1>
-</body>
-</html>
+{% extends 'library/base.html' %}
+
+{% block title %}Welcome - Library Management System{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="page-header text-center">
+        <div class="container-fluid">
+            <h1 class="display-4 mb-3">
+                <i class="bi bi-book"></i> Welcome to Library Management System
+            </h1>
+            <p class="lead">Your comprehensive solution for managing books, members, and library operations</p>
+            <a href="{% url 'dashboard' %}" class="btn btn-light btn-lg btn-custom mt-3">
+                <i class="bi bi-speedometer2"></i> Go to Dashboard
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

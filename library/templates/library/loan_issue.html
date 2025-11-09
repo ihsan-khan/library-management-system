@@ -1,0 +1,38 @@
+{% extends 'library/base.html' %}
+
+{% block title %}Issue Book - Library Management System{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="page-header">
+        <div class="container-fluid">
+            <h1 class="mb-0">
+                <i class="bi bi-arrow-up-circle"></i> Issue Book
+            </h1>
+            <p class="mb-0 mt-2">Loan a book to a library member</p>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Loan Information</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-center text-muted">
+                        <i class="bi bi-tools" style="font-size: 3rem;"></i><br>
+                        Book issue form will be implemented here<br>
+                        This is a placeholder template for the issue book functionality.
+                    </p>
+                    <div class="text-center">
+                        <a href="{% url 'loan_list' %}" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Back to Loans
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

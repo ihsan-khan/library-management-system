@@ -1,0 +1,348 @@
+{% extends 'library/base.html' %}
+
+{% block title %}{{ book.title }} - Book Details{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-2 text-white">
+                            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}" class="text-white-50">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'book_list' %}" class="text-white-50">Books</a></li>
+                            <li class="breadcrumb-item active text-white">{{ book.title|truncatechars:30 }}</li>
+                        </ol>
+                    </nav>
+                    <h1 class="mb-0">
+                        <i class="bi bi-book-fill"></i> {{ book.title }}
+                    </h1>
+                    <p class="mb-0 mt-2">by {{ book.author.name }}</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    {% if is_available %}
+                        <a href="{% url 'loan_issue' %}?book={{ book.id }}" class="btn btn-success btn-custom me-2">
+                            <i class="bi bi-arrow-up-circle"></i> Issue Book
+                        </a>
+                    {% endif %}
+                    <a href="{% url 'book_list' %}" class="btn btn-light btn-custom">
+                        <i class="bi bi-arrow-left"></i> Back to Books
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Book Information -->
+        <div class="col-lg-8 mb-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-info-circle"></i> Book Information
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td class="text-muted" width="30%"><strong>Title:</strong></td>
+                                    <td>{{ book.title }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted"><strong>Author:</strong></td>
+                                    <td>{{ book.author.name }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted"><strong>ISBN:</strong></td>
+                                    <td><code>{{ book.isbn }}</code></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted"><strong>Publisher:</strong></td>
+                                    <td>{{ book.publisher }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td class="text-muted" width="40%"><strong>Published Date:</strong></td>
+                                    <td>{{ book.published_date|date:"F j, Y" }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted"><strong>Total Copies:</strong></td>
+                                    <td><span class="badge bg-info">{{ book.total_copies }}</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted"><strong>Available:</strong></td>
+                                    <td>
+                                        <span class="badge {% if book.available_copies > 0 %}bg-success{% else %}bg-danger{% endif %}">
+                                            {{ book.available_copies }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted"><strong>Categories:</strong></td>
+                                    <td>
+                                        {% for category in book.category.all %}
+                                            <span class="badge bg-secondary me-1">{{ category.name }}</span>
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Availability Progress -->
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <h6>Availability Status</h6>
+                            <div class="progress mb-2" style="height: 25px;">
+                                {% widthratio book.available_copies book.total_copies 100 as availability_percent %}
+                                <div class="progress-bar {% if availability_percent > 50 %}bg-success{% elif availability_percent > 20 %}bg-warning{% else %}bg-danger{% endif %}" 
+                                     role="progressbar" 
+                                     style="width: {{ availability_percent }}%">
+                                    {{ book.available_copies }} of {{ book.total_copies }} available ({{ availability_percent }}%)
+                                </div>
+                            </div>
+                            {% if book.available_copies == 0 %}
+                                <p class="text-danger mb-0">
+                                    <i class="bi bi-exclamation-triangle"></i> 
+                                    This book is currently out of stock. All copies are on loan.
+                                </p>
+                            {% elif book.available_copies <= 2 %}
+                                <p class="text-warning mb-0">
+                                    <i class="bi bi-exclamation-triangle"></i> 
+                                    Limited availability - only {{ book.available_copies }} cop{{ book.available_copies|pluralize:"y,ies" }} left.
+                                </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Current Active Loans -->
+            {% if active_loans %}
+            <div class="card mt-4">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">
+                        <i class="bi bi-arrow-up-circle"></i> Currently Loaned To
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Member</th>
+                                    <th>Issue Date</th>
+                                    <th>Due Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for loan in active_loans %}
+                                    <tr>
+                                        <td>
+                                            <strong>{{ loan.member.first_name }} {{ loan.member.last_name }}</strong><br>
+                                            <small class="text-muted">{{ loan.member.email }}</small>
+                                        </td>
+                                        <td>{{ loan.issue_date|date:"M j, Y" }}</td>
+                                        <td>{{ loan.due_date|date:"M j, Y" }}</td>
+                                        <td>
+                                            {% if loan.due_date < "now"|date:"Y-m-d" %}
+                                                <span class="badge bg-danger">Overdue</span>
+                                            {% else %}
+                                                <span class="badge bg-success">Active</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'member_detail' loan.member.pk %}" class="btn btn-sm btn-outline-primary">
+                                                View Member
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Quick Actions -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-lightning-fill"></i> Quick Actions
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        {% if is_available %}
+                            <a href="{% url 'loan_issue' %}?book={{ book.id }}" class="btn btn-success">
+                                <i class="bi bi-arrow-up-circle"></i> Issue This Book
+                            </a>
+                        {% else %}
+                            <button class="btn btn-secondary" disabled>
+                                <i class="bi bi-x-circle"></i> Not Available
+                            </button>
+                        {% endif %}
+                        <a href="#" class="btn btn-outline-primary">
+                            <i class="bi bi-pencil"></i> Edit Book Details
+                        </a>
+                        <a href="{% url 'book_list' %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-list"></i> View All Books
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loan Statistics -->
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-bar-chart"></i> Loan Statistics
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-6">
+                            <h4 class="text-primary">{{ active_loans|length }}</h4>
+                            <small class="text-muted">Currently Loaned</small>
+                        </div>
+                        <div class="col-6">
+                            <h4 class="text-success">{{ loan_history|length }}</h4>
+                            <small class="text-muted">Total Loans</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Author Information -->
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-person"></i> About the Author
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <h6>{{ book.author.name }}</h6>
+                    {% if book.author.biography %}
+                        <p class="small text-muted">{{ book.author.biography|truncatewords:30 }}</p>
+                    {% else %}
+                        <p class="small text-muted">No biography available for this author.</p>
+                    {% endif %}
+                    <a href="{% url 'author_list' %}" class="btn btn-sm btn-outline-secondary">
+                        View All Authors
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loan History -->
+    {% if loan_history %}
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-clock-history"></i> Loan History
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Member</th>
+                                    <th>Issue Date</th>
+                                    <th>Due Date</th>
+                                    <th>Return Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for loan in loan_history %}
+                                    <tr>
+                                        <td>
+                                            <strong>{{ loan.member.first_name }} {{ loan.member.last_name }}</strong><br>
+                                            <small class="text-muted">{{ loan.member.email }}</small>
+                                        </td>
+                                        <td>{{ loan.issue_date|date:"M j, Y" }}</td>
+                                        <td>{{ loan.due_date|date:"M j, Y" }}</td>
+                                        <td>
+                                            {% if loan.return_date %}
+                                                {{ loan.return_date|date:"M j, Y" }}
+                                            {% else %}
+                                                <em class="text-muted">Not returned</em>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if not loan.return_date %}
+                                                {% if loan.due_date < "now"|date:"Y-m-d" %}
+                                                    <span class="badge bg-danger">Overdue</span>
+                                                {% else %}
+                                                    <span class="badge bg-success">Active</span>
+                                                {% endif %}
+                                            {% else %}
+                                                <span class="badge bg-secondary">Returned</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .breadcrumb-item + .breadcrumb-item::before {
+        color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .table td {
+        vertical-align: middle;
+    }
+    
+    .progress {
+        border-radius: 12px;
+        background-color: #f8f9fa;
+    }
+    
+    .progress-bar {
+        border-radius: 12px;
+        font-size: 13px;
+        font-weight: 500;
+    }
+    
+    .card {
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    @media (max-width: 768px) {
+        .table-responsive {
+            font-size: 0.9rem;
+        }
+        
+        .btn-custom {
+            margin-bottom: 10px;
+        }
+    }
+</style>
+{% endblock %}

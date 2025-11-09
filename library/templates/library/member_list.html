@@ -1,0 +1,263 @@
+{% extends 'library/base.html' %}
+
+{% block title %}Members - Library Management System{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="mb-0">
+                        <i class="bi bi-people-fill"></i> Library Members
+                    </h1>
+                    <p class="mb-0 mt-2">Manage your library member database</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <a href="{% url 'member_add' %}" class="btn btn-light btn-custom">
+                        <i class="bi bi-person-plus"></i> Add New Member
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form method="GET" class="row g-3">
+                        <div class="col-md-10">
+                            <label for="search" class="form-label">Search Members</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control" id="search" name="q" 
+                                       value="{{ current_query|default:'' }}" 
+                                       placeholder="Search by name or email...">
+                            </div>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="bi bi-search"></i> Search
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Members Grid -->
+    <div class="row">
+        {% for member in members %}
+            <div class="col-xl-4 col-lg-6 col-md-6 mb-4">
+                <div class="card h-100 member-card">
+                    <div class="card-header bg-info text-white">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h6 class="mb-0">
+                                    <i class="bi bi-person-circle"></i> 
+                                    {{ member.first_name }} {{ member.last_name }}
+                                </h6>
+                            </div>
+                            <div class="col-4 text-end">
+                                {% if member.active_loans > 0 %}
+                                    <span class="badge bg-warning text-dark">{{ member.active_loans }} Active</span>
+                                {% else %}
+                                    <span class="badge bg-light text-dark">No Loans</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-2">
+                            <div class="col-4 text-muted small">
+                                <i class="bi bi-envelope"></i> Email:
+                            </div>
+                            <div class="col-8 small">
+                                <a href="mailto:{{ member.email }}" class="text-decoration-none">
+                                    {{ member.email|truncatechars:25 }}
+                                </a>
+                            </div>
+                        </div>
+                        
+                        {% if member.phone_number %}
+                        <div class="row mb-2">
+                            <div class="col-4 text-muted small">
+                                <i class="bi bi-telephone"></i> Phone:
+                            </div>
+                            <div class="col-8 small">{{ member.phone_number }}</div>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="row mb-2">
+                            <div class="col-4 text-muted small">
+                                <i class="bi bi-calendar"></i> Joined:
+                            </div>
+                            <div class="col-8 small">{{ member.join_date|date:"M j, Y" }}</div>
+                        </div>
+
+                        <!-- Member Statistics -->
+                        <div class="row mt-3">
+                            <div class="col-6 text-center">
+                                <div class="border rounded p-2 bg-light">
+                                    <h5 class="mb-0 text-primary">{{ member.active_loans }}</h5>
+                                    <small class="text-muted">Active Loans</small>
+                                </div>
+                            </div>
+                            <div class="col-6 text-center">
+                                <div class="border rounded p-2 bg-light">
+                                    <h5 class="mb-0 text-success">{{ member.total_loans }}</h5>
+                                    <small class="text-muted">Total Loans</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if member.address %}
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <small class="text-muted">
+                                    <i class="bi bi-geo-alt"></i> {{ member.address|truncatechars:40 }}
+                                </small>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'member_detail' member.pk %}" class="btn btn-outline-primary btn-sm flex-fill">
+                                <i class="bi bi-eye"></i> View Details
+                            </a>
+                            {% if member.active_loans == 0 %}
+                                <a href="{% url 'loan_issue' %}?member={{ member.id }}" class="btn btn-success btn-sm">
+                                    <i class="bi bi-plus"></i> Issue Book
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body text-center py-5">
+                        <i class="bi bi-people" style="font-size: 4rem; color: #dee2e6;"></i>
+                        <h4 class="mt-3 text-muted">No Members Found</h4>
+                        <p class="text-muted">
+                            {% if current_query %}
+                                No members match your search criteria "{{ current_query }}".
+                            {% else %}
+                                Your library doesn't have any registered members yet.
+                            {% endif %}
+                        </p>
+                        {% if not current_query %}
+                            <a href="{% url 'member_add' %}" class="btn btn-primary btn-custom">
+                                <i class="bi bi-person-plus"></i> Register First Member
+                            </a>
+                        {% else %}
+                            <a href="{% url 'member_list' %}" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Clear Search
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Summary Statistics -->
+    {% if members %}
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-bar-chart"></i> Membership Summary
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-3 col-6 mb-3">
+                            <h4 class="text-primary">{{ members|length }}</h4>
+                            <small class="text-muted">Total Members</small>
+                        </div>
+                        <div class="col-md-3 col-6 mb-3">
+                            <h4 class="text-success">
+                                {% for member in members %}
+                                    {% if member.active_loans > 0 %}{{ forloop.counter }}{% endif %}
+                                {% endfor %}
+                            </h4>
+                            <small class="text-muted">Active Borrowers</small>
+                        </div>
+                        <div class="col-md-3 col-6 mb-3">
+                            <h4 class="text-info">
+                                {% for member in members %}
+                                    {% if forloop.first %}{{ member.join_date|date:"Y" }}{% endif %}
+                                {% endfor %}
+                            </h4>
+                            <small class="text-muted">Since Year</small>
+                        </div>
+                        <div class="col-md-3 col-6 mb-3">
+                            <h4 class="text-warning">
+                                {{ members|length|floatformat:0 }}
+                            </h4>
+                            <small class="text-muted">This Month</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .member-card {
+        transition: all 0.3s ease;
+        border: 1px solid #e3e6f0;
+    }
+    
+    .member-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+    
+    .member-card .card-body {
+        padding: 1rem;
+    }
+    
+    .member-card .border {
+        border-color: #e9ecef !important;
+    }
+    
+    .member-card .bg-light {
+        background-color: #f8f9fa !important;
+    }
+    
+    @media (max-width: 768px) {
+        .member-card .card-body {
+            padding: 0.75rem;
+        }
+        
+        .member-card .row {
+            margin-bottom: 0.5rem !important;
+        }
+        
+        .d-md-flex .btn {
+            margin-bottom: 5px;
+        }
+    }
+    
+    .badge {
+        font-size: 0.7rem;
+    }
+    
+    .text-decoration-none:hover {
+        text-decoration: underline !important;
+    }
+</style>
+{% endblock %}

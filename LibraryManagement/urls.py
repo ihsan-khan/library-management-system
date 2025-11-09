@@ -23,5 +23,5 @@ admin.site.index_title = "Admin Portal"
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('library/', include('library.urls')),
+    path('', include('library.urls')),  # Include library URLs at root level
 ] + debug_toolbar_urls()
