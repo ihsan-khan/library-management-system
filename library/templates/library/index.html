@@ -3,17 +3,498 @@
 {% block title %}Welcome - Library Management System{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="page-header text-center">
-        <div class="container-fluid">
-            <h1 class="display-4 mb-3">
-                <i class="bi bi-book"></i> Welcome to Library Management System
-            </h1>
-            <p class="lead">Your comprehensive solution for managing books, members, and library operations</p>
-            <a href="{% url 'dashboard' %}" class="btn btn-light btn-lg btn-custom mt-3">
-                <i class="bi bi-speedometer2"></i> Go to Dashboard
-            </a>
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container-fluid">
+        <div class="row min-vh-100 align-items-center">
+            <div class="col-lg-6 text-center text-lg-start">
+                <div class="hero-content">
+                    <h1 class="hero-title display-3 fw-bold mb-4">
+                        <span class="text-gradient">Library</span> 
+                        <br>Management System
+                    </h1>
+                    <p class="hero-subtitle lead mb-4">
+                        Streamline your library operations with our comprehensive digital solution. 
+                        Manage books, track loans, organize members, and much more with ease.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg me-3 btn-custom">
+                            <i class="bi bi-speedometer2"></i> Access Dashboard
+                        </a>
+                        <a href="#features" class="btn btn-outline-primary btn-lg btn-custom">
+                            <i class="bi bi-info-circle"></i> Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="hero-illustration">
+                    <div class="floating-books">
+                        <div class="book book-1">
+                            <i class="bi bi-book-fill"></i>
+                        </div>
+                        <div class="book book-2">
+                            <i class="bi bi-journal-bookmark-fill"></i>
+                        </div>
+                        <div class="book book-3">
+                            <i class="bi bi-collection"></i>
+                        </div>
+                        <div class="book book-4">
+                            <i class="bi bi-book-half"></i>
+                        </div>
+                    </div>
+                    <div class="hero-icon">
+                        <i class="bi bi-building text-primary"></i>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="features-section py-5">
+    <div class="container-fluid">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="section-title display-5 fw-bold mb-3">Powerful Features</h2>
+                <p class="section-subtitle text-muted">Everything you need to manage your library efficiently</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Book Management -->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-book-fill text-primary"></i>
+                        </div>
+                        <h4 class="card-title mb-3">Book Management</h4>
+                        <p class="card-text text-muted">
+                            Add, edit, and organize your book collection with detailed information, 
+                            categories, and availability tracking.
+                        </p>
+                        <ul class="list-unstyled text-start">
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Book catalog</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> ISBN tracking</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Category management</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Author profiles</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member Management -->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-people-fill text-success"></i>
+                        </div>
+                        <h4 class="card-title mb-3">Member Management</h4>
+                        <p class="card-text text-muted">
+                            Register and manage library members with complete profiles, 
+                            contact information, and loan history.
+                        </p>
+                        <ul class="list-unstyled text-start">
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Member registration</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Profile management</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Contact tracking</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Loan history</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loan Tracking -->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-arrow-left-right text-info"></i>
+                        </div>
+                        <h4 class="card-title mb-3">Loan Tracking</h4>
+                        <p class="card-text text-muted">
+                            Issue and return books easily with automatic due date tracking 
+                            and overdue notifications.
+                        </p>
+                        <ul class="list-unstyled text-start">
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Issue & return books</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Due date tracking</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Overdue monitoring</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i> Fine management</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search & Analytics -->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-search text-warning"></i>
+                        </div>
+                        <h4 class="card-title mb-3">Search & Filter</h4>
+                        <p class="card-text text-muted">
+                            Powerful search functionality to quickly find books, members, 
+                            and loan records with advanced filtering options.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard & Reports -->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-graph-up text-danger"></i>
+                        </div>
+                        <h4 class="card-title mb-3">Dashboard & Analytics</h4>
+                        <p class="card-text text-muted">
+                            Get insights into your library operations with comprehensive 
+                            statistics and visual reports.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modern Interface -->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-phone text-purple"></i>
+                        </div>
+                        <h4 class="card-title mb-3">Responsive Design</h4>
+                        <p class="card-text text-muted">
+                            Modern, responsive interface that works perfectly on desktop, 
+                            tablet, and mobile devices.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quick Stats Section -->
+<section class="stats-section py-5 bg-light">
+    <div class="container-fluid">
+        <div class="row text-center">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item">
+                    <div class="stat-icon mb-3">
+                        <i class="bi bi-book text-primary"></i>
+                    </div>
+                    <h3 class="stat-number">∞</h3>
+                    <p class="stat-label">Books Supported</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item">
+                    <div class="stat-icon mb-3">
+                        <i class="bi bi-people text-success"></i>
+                    </div>
+                    <h3 class="stat-number">∞</h3>
+                    <p class="stat-label">Members Capacity</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item">
+                    <div class="stat-icon mb-3">
+                        <i class="bi bi-clock text-info"></i>
+                    </div>
+                    <h3 class="stat-number">24/7</h3>
+                    <p class="stat-label">System Availability</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item">
+                    <div class="stat-icon mb-3">
+                        <i class="bi bi-shield-check text-warning"></i>
+                    </div>
+                    <h3 class="stat-number">100%</h3>
+                    <p class="stat-label">Data Security</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="cta-section py-5">
+    <div class="container-fluid">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-8">
+                <h2 class="cta-title display-5 fw-bold mb-3">Ready to Get Started?</h2>
+                <p class="cta-subtitle lead mb-4">
+                    Start managing your library with our powerful and intuitive system. 
+                    Access all features from the comprehensive dashboard.
+                </p>
+                <div class="cta-buttons">
+                    <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg me-3 btn-custom">
+                        <i class="bi bi-rocket-takeoff"></i> Launch Dashboard
+                    </a>
+                    <a href="{% url 'book_list' %}" class="btn btn-outline-primary btn-lg btn-custom">
+                        <i class="bi bi-book"></i> Browse Books
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Hero Section */
+    .hero-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="books" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><rect fill="none" stroke="rgba(255,255,255,0.1)" width="20" height="20"/></pattern></defs><rect fill="url(%23books)" width="100" height="100"/></svg>');
+        opacity: 0.3;
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+    
+    .text-gradient {
+        background: linear-gradient(45deg, #fff, #e0e7ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .hero-title {
+        font-size: 3.5rem;
+        line-height: 1.2;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+        opacity: 0.9;
+    }
+    
+    /* Floating Books Animation */
+    .hero-illustration {
+        position: relative;
+        height: 400px;
+    }
+    
+    .floating-books {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .book {
+        position: absolute;
+        font-size: 2rem;
+        color: rgba(255, 255, 255, 0.8);
+        animation: float 6s ease-in-out infinite;
+    }
+    
+    .book-1 { top: 20%; left: 20%; animation-delay: 0s; }
+    .book-2 { top: 60%; right: 20%; animation-delay: 1.5s; }
+    .book-3 { bottom: 30%; left: 30%; animation-delay: 3s; }
+    .book-4 { top: 40%; right: 40%; animation-delay: 4.5s; }
+    
+    .hero-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 8rem;
+        opacity: 0.2;
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+    }
+    
+    /* Features Section */
+    .features-section {
+        padding: 80px 0;
+    }
+    
+    .section-title {
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+    }
+    
+    .feature-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1) !important;
+    }
+    
+    .feature-icon i {
+        font-size: 3rem;
+    }
+    
+    /* Stats Section */
+    .stats-section {
+        background-color: #f8f9fa !important;
+        padding: 60px 0;
+    }
+    
+    .stat-item {
+        padding: 20px;
+    }
+    
+    .stat-icon i {
+        font-size: 3rem;
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+    }
+    
+    .stat-label {
+        color: #6c757d;
+        font-weight: 500;
+    }
+    
+    /* CTA Section */
+    .cta-section {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: white;
+        padding: 80px 0;
+    }
+    
+    .cta-title {
+        margin-bottom: 1rem;
+    }
+    
+    .cta-subtitle {
+        opacity: 0.9;
+    }
+    
+    /* Custom Colors */
+    .text-purple {
+        color: #6f42c1 !important;
+    }
+    
+    /* Button Enhancements */
+    .btn-custom {
+        border-radius: 50px;
+        padding: 12px 30px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+    
+    .btn-custom:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1rem;
+        }
+        
+        .hero-buttons .btn {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        .feature-card {
+            margin-bottom: 30px;
+        }
+        
+        .cta-buttons .btn {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        .floating-books {
+            display: none;
+        }
+        
+        .hero-illustration {
+            height: 200px;
+        }
+    }
+    
+    /* Smooth Scrolling */
+    html {
+        scroll-behavior: smooth;
+    }
+    
+    /* Section Padding */
+    section {
+        scroll-margin-top: 76px; /* Account for fixed navbar */
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Animate statistics on scroll
+    document.addEventListener('DOMContentLoaded', function() {
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe feature cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            observer.observe(card);
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}

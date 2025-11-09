@@ -9,7 +9,8 @@ from .forms import BookForm, AuthorForm, CategoryForm
 
 # Dashboard view
 def index(request):
-    return redirect('dashboard')
+    # return index.html directly
+    return render(request, 'library/index.html')
 
 def dashboard(request):
     # Calculate statistics
