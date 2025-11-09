@@ -6,25 +6,71 @@
 <div class="container-fluid">
     <div class="page-header">
         <div class="container-fluid">
-            <h1 class="mb-0">
-                <i class="bi bi-person"></i> Authors
-            </h1>
-            <p class="mb-0 mt-2">Browse authors in your library collection</p>
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="mb-0">
+                        <i class="bi bi-person"></i> Authors
+                    </h1>
+                    <p class="mb-0 mt-2">Browse authors in your library collection</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <a href="{% url 'author_add' %}" class="btn btn-light btn-custom">
+                        <i class="bi bi-person-plus"></i> Add New Author
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="row">
         {% for author in authors %}
             <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card">
+                <div class="card author-card h-100">
+                    <div class="card-header bg-success text-white">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h6 class="mb-0">
+                                    <i class="bi bi-person-circle"></i> 
+                                    {{ author.name }}
+                                </h6>
+                            </div>
+                            <div class="col-4 text-end">
+                                <span class="badge bg-light text-dark">{{ author.book_count }} book{{ author.book_count|pluralize }}</span>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card-body">
-                        <h5 class="card-title">{{ author.name }}</h5>
-                        <p class="card-text">
-                            <span class="badge bg-primary">{{ author.book_count }} book{{ author.book_count|pluralize }}</span>
-                        </p>
                         {% if author.biography %}
-                            <p class="card-text small text-muted">{{ author.biography|truncatewords:15 }}</p>
+                            <p class="card-text text-muted mb-3">{{ author.biography|truncatewords:20 }}</p>
+                        {% else %}
+                            <p class="card-text text-muted mb-3 fst-italic">No biography available.</p>
                         {% endif %}
+                        
+                        <!-- Author Stats -->
+                        <div class="row text-center mb-3">
+                            <div class="col-6">
+                                <div class="border rounded p-2 bg-light">
+                                    <h6 class="mb-0 text-primary">{{ author.book_count }}</h6>
+                                    <small class="text-muted">Books</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="border rounded p-2 bg-light">
+                                    <h6 class="mb-0 text-success">Active</h6>
+                                    <small class="text-muted">Status</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-between">
+                            <a href="{% url 'book_list' %}?author={{ author.name }}" class="btn btn-outline-primary btn-sm flex-fill">
+                                <i class="bi bi-book"></i> View Books
+                            </a>
+                            <a href="#" class="btn btn-outline-secondary btn-sm">
+                                <i class="bi bi-pencil"></i> Edit
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -34,14 +80,59 @@
                     <div class="card-body text-center py-5">
                         <i class="bi bi-person" style="font-size: 4rem; color: #dee2e6;"></i>
                         <h4 class="mt-3 text-muted">No Authors Found</h4>
-                        <p class="text-muted">Add some books to see authors listed here.</p>
-                        <a href="{% url 'book_add' %}" class="btn btn-primary">
-                            <i class="bi bi-plus-circle"></i> Add Books
-                        </a>
+                        <p class="text-muted">No authors found. Add authors to your library database.</p>
+                        <div class="d-gap gap-2">
+                            <a href="{% url 'author_add' %}" class="btn btn-primary me-2">
+                                <i class="bi bi-person-plus"></i> Add Author
+                            </a>
+                            <a href="{% url 'book_add' %}" class="btn btn-outline-primary">
+                                <i class="bi bi-plus-circle"></i> Add Books
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         {% endfor %}
     </div>
 </div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .author-card {
+        transition: all 0.3s ease;
+        border: 1px solid #e3e6f0;
+    }
+    
+    .author-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+    
+    .author-card .card-body {
+        padding: 1rem;
+    }
+    
+    .author-card .border {
+        border-color: #e9ecef !important;
+    }
+    
+    .author-card .bg-light {
+        background-color: #f8f9fa !important;
+    }
+    
+    @media (max-width: 768px) {
+        .author-card .card-body {
+            padding: 0.75rem;
+        }
+        
+        .d-md-flex .btn {
+            margin-bottom: 5px;
+        }
+    }
+    
+    .badge {
+        font-size: 0.7rem;
+    }
+</style>
 {% endblock %}

@@ -24,6 +24,7 @@ urlpatterns = [
     
     # Authors and Categories
     path('authors/', views.author_list, name='author_list'),
+    path('authors/add/', views.author_add, name='author_add'),
     path('categories/', views.category_list, name='category_list'),
     
     # Search

@@ -1,0 +1,322 @@
+{% extends 'library/base.html' %}
+
+{% block title %}{{ title|default:"Add Author" }} - Library Management System{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="page-header">
+        <div class="container-fluid">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-2 text-white">
+                    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}" class="text-white-50">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'author_list' %}" class="text-white-50">Authors</a></li>
+                    <li class="breadcrumb-item active text-white">Add Author</li>
+                </ol>
+            </nav>
+            <h1 class="mb-0">
+                <i class="bi bi-person-plus"></i> {{ title|default:"Add New Author" }}
+            </h1>
+            <p class="mb-0 mt-2">Add a new author to your library database</p>
+        </div>
+    </div>
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+        <div class="row justify-content-center">
+            <!-- Main Author Information -->
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">
+                            <i class="bi bi-person-circle"></i> Author Information
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Author Name -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <label for="{{ form.name.id_for_label }}" class="form-label">
+                                    <i class="bi bi-person"></i> Author Name <span class="text-danger">*</span>
+                                </label>
+                                {{ form.name }}
+                                {% if form.name.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.name.errors.0 }}
+                                    </div>
+                                {% endif %}
+                                <div class="form-text">Enter the full name of the author</div>
+                            </div>
+                        </div>
+
+                        <!-- Author Biography -->
+                        <div class="row">
+                            <div class="col-12">
+                                <label for="{{ form.biography.id_for_label }}" class="form-label">
+                                    <i class="bi bi-journal-text"></i> Biography
+                                </label>
+                                {{ form.biography }}
+                                {% if form.biography.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.biography.errors.0 }}
+                                    </div>
+                                {% endif %}
+                                <div class="form-text">
+                                    Provide a brief biography or description of the author (optional)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preview Section -->
+                <div class="card mb-4" id="author-preview" style="display: none;">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">
+                            <i class="bi bi-eye"></i> Author Preview
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3 text-center">
+                                <div class="author-avatar mb-3">
+                                    <i class="bi bi-person-circle text-muted" style="font-size: 5rem;"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <h4 id="preview-name" class="text-primary mb-2">Author Name</h4>
+                                <p id="preview-biography" class="text-muted mb-0">Author biography will appear here...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Form Actions -->
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">
+                            <i class="bi bi-lightning"></i> Actions
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="bi bi-check-circle"></i> Add Author
+                            </button>
+                            <a href="{% url 'author_list' %}" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Cancel & Go Back
+                            </a>
+                        </div>
+                        
+                        <!-- Form Help -->
+                        <hr class="my-3">
+                        <div class="small text-muted">
+                            <h6 class="text-dark">Quick Tips:</h6>
+                            <ul class="mb-0 ps-3">
+                                <li>Author name is required</li>
+                                <li>Biography is optional but recommended</li>
+                                <li>You can edit author details later</li>
+                                <li>Authors will appear in book forms</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Author Statistics (if this is an edit) -->
+                <div class="card mb-4">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="mb-0">
+                            <i class="bi bi-info-circle"></i> Author Guidelines
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-12 mb-3">
+                                <div class="border rounded p-3 bg-light">
+                                    <i class="bi bi-book text-primary" style="font-size: 2rem;"></i>
+                                    <h6 class="mt-2 mb-0">Book Association</h6>
+                                    <small class="text-muted">Author will be available when adding books</small>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="border rounded p-3 bg-light">
+                                    <i class="bi bi-search text-success" style="font-size: 2rem;"></i>
+                                    <h6 class="mt-2 mb-0">Searchable</h6>
+                                    <small class="text-muted">Members can find books by author name</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card">
+                    <div class="card-header bg-secondary text-white">
+                        <h5 class="mb-0">
+                            <i class="bi bi-plus-circle"></i> Quick Actions
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <a href="{% url 'book_add' %}" class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-book-half"></i> Add Book After This
+                            </a>
+                            <a href="{% url 'category_list' %}" class="btn btn-outline-info btn-sm">
+                                <i class="bi bi-tags"></i> Manage Categories
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Errors -->
+        {% if form.non_field_errors %}
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="alert alert-danger">
+                        <h6><i class="bi bi-exclamation-triangle"></i> Please fix the following errors:</h6>
+                        {{ form.non_field_errors }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-control:focus {
+        border-color: #28a745;
+        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    }
+    
+    .breadcrumb-item + .breadcrumb-item::before {
+        color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .invalid-feedback {
+        display: block;
+    }
+    
+    .card {
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        border: none;
+    }
+    
+    .author-avatar {
+        transition: transform 0.3s ease;
+    }
+    
+    .author-avatar:hover {
+        transform: scale(1.05);
+    }
+    
+    #author-preview {
+        animation: slideDown 0.3s ease-out;
+    }
+    
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .border {
+        border-color: #e9ecef !important;
+    }
+    
+    .bg-light {
+        background-color: #f8f9fa !important;
+    }
+    
+    @media (max-width: 768px) {
+        .card-body {
+            padding: 1rem;
+        }
+        
+        .d-grid .btn {
+            margin-bottom: 10px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const nameInput = document.getElementById('id_name');
+        const biographyInput = document.getElementById('id_biography');
+        const previewCard = document.getElementById('author-preview');
+        const previewName = document.getElementById('preview-name');
+        const previewBiography = document.getElementById('preview-biography');
+        
+        // Show/hide preview and update content
+        function updatePreview() {
+            const name = nameInput.value.trim();
+            const biography = biographyInput.value.trim();
+            
+            if (name) {
+                previewName.textContent = name;
+                previewBiography.textContent = biography || 'No biography provided.';
+                previewCard.style.display = 'block';
+            } else {
+                previewCard.style.display = 'none';
+            }
+        }
+        
+        // Add event listeners
+        nameInput.addEventListener('input', updatePreview);
+        biographyInput.addEventListener('input', updatePreview);
+        
+        // Form validation feedback
+        const form = document.querySelector('form');
+        const inputs = form.querySelectorAll('.form-control');
+        
+        inputs.forEach(input => {
+            input.addEventListener('invalid', function() {
+                this.classList.add('is-invalid');
+            });
+            
+            input.addEventListener('input', function() {
+                this.classList.remove('is-invalid');
+                if (this.checkValidity()) {
+                    this.classList.add('is-valid');
+                } else {
+                    this.classList.remove('is-valid');
+                }
+            });
+        });
+        
+        // Character count for biography
+        const maxLength = 1000; // Assuming max length for biography
+        biographyInput.addEventListener('input', function() {
+            const remaining = maxLength - this.value.length;
+            let helpText = this.nextElementSibling;
+            
+            if (this.value.length > 0) {
+                if (helpText && helpText.classList.contains('form-text')) {
+                    if (remaining < 100) {
+                        helpText.innerHTML = `${remaining} characters remaining`;
+                        helpText.className = remaining < 0 ? 'form-text text-danger' : 'form-text text-warning';
+                    } else {
+                        helpText.innerHTML = 'Provide a brief biography or description of the author (optional)';
+                        helpText.className = 'form-text';
+                    }
+                }
+            }
+        });
+        
+        // Auto-focus on name field
+        nameInput.focus();
+    });
+</script>
+{% endblock %}

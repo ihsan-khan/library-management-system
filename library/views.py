@@ -221,6 +221,24 @@ def book_add(request):
 def member_add(request):
     return render(request, 'library/member_form.html')
 
+def author_add(request):
+    if request.method == 'POST':
+        form = AuthorForm(request.POST)
+        if form.is_valid():
+            author = form.save()
+            messages.success(request, f'Author "{author.name}" has been added successfully!')
+            return redirect('author_list')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = AuthorForm()
+    
+    context = {
+        'form': form,
+        'title': 'Add New Author'
+    }
+    return render(request, 'library/author_form.html', context)
+
 def loan_issue(request):
     return render(request, 'library/loan_issue.html')
 
