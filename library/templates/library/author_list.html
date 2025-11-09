@@ -14,7 +14,7 @@
                     <p class="mb-0 mt-2">Browse authors in your library collection</p>
                 </div>
                 <div class="col-md-4 text-end">
-                    <a href="{% url 'author_add' %}" class="btn btn-light btn-custom">
+                    <a href="{{ url_for('author_add') }}" class="btn btn-light btn-custom">
                         <i class="bi bi-person-plus"></i> Add New Author
                     </a>
                 </div>
@@ -35,13 +35,13 @@
                                 </h6>
                             </div>
                             <div class="col-4 text-end">
-                                <span class="badge bg-light text-dark">{{ author.book_count }} book{{ author.book_count|pluralize }}</span>
+                                <span class="badge bg-light text-dark">{{ author.book_count }} book{% if author.book_count != 1 %}s{% endif %}</span>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
                         {% if author.biography %}
-                            <p class="card-text text-muted mb-3">{{ author.biography|truncatewords:20 }}</p>
+                            <p class="card-text text-muted mb-3">{{ author.biography }}</p>
                         {% else %}
                             <p class="card-text text-muted mb-3 fst-italic">No biography available.</p>
                         {% endif %}
@@ -64,7 +64,7 @@
                     </div>
                     <div class="card-footer bg-transparent">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-between">
-                            <a href="{% url 'book_list' %}?author={{ author.name }}" class="btn btn-outline-primary btn-sm flex-fill">
+                            <a href="{{ url_for('book_list') }}?author={{ author.name }}" class="btn btn-outline-primary btn-sm flex-fill">
                                 <i class="bi bi-book"></i> View Books
                             </a>
                             <a href="#" class="btn btn-outline-secondary btn-sm">
@@ -74,7 +74,7 @@
                     </div>
                 </div>
             </div>
-        {% empty %}
+        {% else %}
             <div class="col-12">
                 <div class="card">
                     <div class="card-body text-center py-5">
@@ -82,10 +82,10 @@
                         <h4 class="mt-3 text-muted">No Authors Found</h4>
                         <p class="text-muted">No authors found. Add authors to your library database.</p>
                         <div class="d-gap gap-2">
-                            <a href="{% url 'author_add' %}" class="btn btn-primary me-2">
+                            <a href="{{ url_for('author_add') }}" class="btn btn-primary me-2">
                                 <i class="bi bi-person-plus"></i> Add Author
                             </a>
-                            <a href="{% url 'book_add' %}" class="btn btn-outline-primary">
+                            <a href="{{ url_for('book_add') }}" class="btn btn-outline-primary">
                                 <i class="bi bi-plus-circle"></i> Add Books
                             </a>
                         </div>

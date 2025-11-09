@@ -18,7 +18,7 @@
                         Manage books, track loans, organize members, and much more with ease.
                     </p>
                     <div class="hero-buttons">
-                        <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg me-3 btn-custom">
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg me-3 btn-custom">
                             <i class="bi bi-speedometer2"></i> Access Dashboard
                         </a>
                         <a href="#features" class="btn btn-outline-primary btn-lg btn-custom">
@@ -235,10 +235,10 @@
                     Access all features from the comprehensive dashboard.
                 </p>
                 <div class="cta-buttons">
-                    <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg me-3 btn-custom">
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg me-3 btn-custom">
                         <i class="bi bi-rocket-takeoff"></i> Launch Dashboard
                     </a>
-                    <a href="{% url 'book_list' %}" class="btn btn-outline-primary btn-lg btn-custom">
+                    <a href="{{ url_for('book_list') }}" class="btn btn-outline-primary btn-lg btn-custom">
                         <i class="bi bi-book"></i> Browse Books
                     </a>
                 </div>

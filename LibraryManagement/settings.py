@@ -56,6 +56,16 @@ ROOT_URLCONF = 'LibraryManagement.urls'
 
 TEMPLATES = [
     {
+        'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        'DIRS': [
+            BASE_DIR / 'library' / 'templates',
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'environment': 'library.jinja2.environment',
+        },
+    },
+    {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
         'APP_DIRS': True,

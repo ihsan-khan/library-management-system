@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="card-footer bg-transparent border-0">
-                    <a href="{% url 'book_list' %}" class="btn btn-light btn-sm w-100">
+                    <a href="{{ url_for('book_list') }}" class="btn btn-light btn-sm w-100">
                         <i class="bi bi-arrow-right"></i> View All Books
                     </a>
                 </div>
@@ -59,7 +59,7 @@
                     </div>
                 </div>
                 <div class="card-footer bg-transparent border-0">
-                    <a href="{% url 'member_list' %}" class="btn btn-light btn-sm w-100">
+                    <a href="{{ url_for('member_list') }}" class="btn btn-light btn-sm w-100">
                         <i class="bi bi-arrow-right"></i> View All Members
                     </a>
                 </div>
@@ -80,7 +80,7 @@
                     </div>
                 </div>
                 <div class="card-footer bg-transparent border-0">
-                    <a href="{% url 'loan_list' %}" class="btn btn-light btn-sm w-100">
+                    <a href="{{ url_for('loan_list') }}" class="btn btn-light btn-sm w-100">
                         <i class="bi bi-arrow-right"></i> View All Loans
                     </a>
                 </div>
@@ -101,7 +101,7 @@
                     </div>
                 </div>
                 <div class="card-footer bg-transparent border-0">
-                    <a href="{% url 'overdue_loans' %}" class="btn btn-light btn-sm w-100">
+                    <a href="{{ url_for('overdue_loans') }}" class="btn btn-light btn-sm w-100">
                         <i class="bi bi-arrow-right"></i> View Overdue
                     </a>
                 </div>
@@ -121,37 +121,37 @@
                 <div class="card-body">
                     <div class="row text-center">
                         <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
-                            <a href="{% url 'book_add' %}" class="btn btn-outline-primary btn-custom w-100">
+                            <a href="{{ url_for('book_add') }}" class="btn btn-outline-primary btn-custom w-100">
                                 <i class="bi bi-plus-circle d-block mb-2" style="font-size: 2rem;"></i>
                                 Add Book
                             </a>
                         </div>
                         <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
-                            <a href="{% url 'member_add' %}" class="btn btn-outline-success btn-custom w-100">
+                            <a href="{{ url_for('member_add') }}" class="btn btn-outline-success btn-custom w-100">
                                 <i class="bi bi-person-plus d-block mb-2" style="font-size: 2rem;"></i>
                                 Add Member
                             </a>
                         </div>
                         <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
-                            <a href="{% url 'loan_issue' %}" class="btn btn-outline-info btn-custom w-100">
+                            <a href="{{ url_for('loan_issue') }}" class="btn btn-outline-info btn-custom w-100">
                                 <i class="bi bi-arrow-up-circle d-block mb-2" style="font-size: 2rem;"></i>
                                 Issue Book
                             </a>
                         </div>
                         <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
-                            <a href="{% url 'loan_return' %}" class="btn btn-outline-warning btn-custom w-100">
+                            <a href="{{ url_for('loan_return') }}" class="btn btn-outline-warning btn-custom w-100">
                                 <i class="bi bi-arrow-down-circle d-block mb-2" style="font-size: 2rem;"></i>
                                 Return Book
                             </a>
                         </div>
                         <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
-                            <a href="{% url 'book_list' %}" class="btn btn-outline-secondary btn-custom w-100">
+                            <a href="{{ url_for('book_list') }}" class="btn btn-outline-secondary btn-custom w-100">
                                 <i class="bi bi-search d-block mb-2" style="font-size: 2rem;"></i>
                                 Search Books
                             </a>
                         </div>
                         <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
-                            <a href="{% url 'overdue_loans' %}" class="btn btn-outline-danger btn-custom w-100">
+                            <a href="{{ url_for('overdue_loans') }}" class="btn btn-outline-danger btn-custom w-100">
                                 <i class="bi bi-exclamation-triangle d-block mb-2" style="font-size: 2rem;"></i>
                                 View Overdue
                             </a>
@@ -200,7 +200,7 @@
                     {% endif %}
                 </div>
                 <div class="card-footer bg-transparent">
-                    <a href="{% url 'loan_list' %}" class="btn btn-sm btn-outline-success">
+                    <a href="{{ url_for('loan_list') }}" class="btn btn-sm btn-outline-success">
                         View All Loans <i class="bi bi-arrow-right"></i>
                     </a>
                 </div>
@@ -244,7 +244,7 @@
                     {% endif %}
                 </div>
                 <div class="card-footer bg-transparent">
-                    <a href="{% url 'book_list' %}" class="btn btn-sm btn-outline-info">
+                    <a href="{{ url_for('book_list') }}" class="btn btn-sm btn-outline-info">
                         View All Books <i class="bi bi-arrow-right"></i>
                     </a>
                 </div>

@@ -134,7 +134,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'index' %}">
+            <a class="navbar-brand" href="{{ url_for('index') }}">
                 <i class="bi bi-book"></i> Library System
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -143,7 +143,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'dashboard' %}">
+                        <a class="nav-link" href="{{ url_for('dashboard') }}">
                             <i class="bi bi-speedometer2"></i> Dashboard
                         </a>
                     </li>
@@ -152,13 +152,13 @@
                             <i class="bi bi-book"></i> Books
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{% url 'book_list' %}">All Books</a></li>
-                            <li><a class="dropdown-item" href="{% url 'book_add' %}">Add Book</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('book_list') }}">All Books</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('book_add') }}">Add Book</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="{% url 'author_list' %}">Authors</a></li>
-                            <li><a class="dropdown-item" href="{% url 'author_add' %}">Add Author</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('author_list') }}">Authors</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('author_add') }}">Add Author</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="{% url 'category_list' %}">Categories</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('category_list') }}">Categories</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -166,8 +166,8 @@
                             <i class="bi bi-people"></i> Members
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{% url 'member_list' %}">All Members</a></li>
-                            <li><a class="dropdown-item" href="{% url 'member_add' %}">Add Member</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('member_list') }}">All Members</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('member_add') }}">Add Member</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -175,15 +175,15 @@
                             <i class="bi bi-arrow-left-right"></i> Loans
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{% url 'loan_list' %}">Active Loans</a></li>
-                            <li><a class="dropdown-item" href="{% url 'loan_issue' %}">Issue Book</a></li>
-                            <li><a class="dropdown-item" href="{% url 'loan_return' %}">Return Book</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('loan_list') }}">Active Loans</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('loan_issue') }}">Issue Book</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('loan_return') }}">Return Book</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="{% url 'overdue_loans' %}">Overdue Books</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('overdue_loans') }}">Overdue Books</a></li>
                         </ul>
                     </li>
                 </ul>
-                <form class="d-flex me-3" method="GET" action="{% url 'search' %}">
+                <form class="d-flex me-3" method="GET" action="{{ url_for('search') }}">
                     <input class="form-control me-2 search-box" type="search" name="q" placeholder="Search books, members..." aria-label="Search">
                     <button class="btn btn-outline-light" type="submit">
                         <i class="bi bi-search"></i>

@@ -1,6 +1,6 @@
 {% extends 'library/base.html' %}
 
-{% block title %}{{ title|default:"Add Book" }} - Library Management System{% endblock %}
+{% block title %}{{ title|default("Add Book") }} - Library Management System{% endblock %}
 
 {% block content %}
 <div class="container-fluid">
@@ -14,14 +14,14 @@
                 </ol>
             </nav>
             <h1 class="mb-0">
-                <i class="bi bi-plus-circle"></i> {{ title|default:"Add New Book" }}
+                <i class="bi bi-plus-circle"></i> {{ title|default("Add New Book") }}
             </h1>
             <p class="mb-0 mt-2">Add a new book to your library collection</p>
         </div>
     </div>
 
     <form method="post" novalidate>
-        {% csrf_token %}
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
         <div class="row">
             <!-- Main Book Information -->
             <div class="col-lg-8">
