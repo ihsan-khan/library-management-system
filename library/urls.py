@@ -10,6 +10,7 @@ urlpatterns = [
     path('books/', views.book_list, name='book_list'),
     path('books/add/', views.book_add, name='book_add'),
     path('books/<slug:slug>/', views.book_detail, name='book_detail'),
+    path('books/<slug:slug>/edit/', views.book_edit, name='book_edit'),
     
     # Member management
     path('members/', views.member_list, name='member_list'),
@@ -25,6 +26,7 @@ urlpatterns = [
     # Authors and Categories
     path('authors/', views.author_list, name='author_list'),
     path('authors/add/', views.author_add, name='author_add'),
+    path('authors/<int:pk>/edit/', views.author_edit, name='author_edit'),
     path('categories/', views.category_list, name='category_list'),
     
     # Search

@@ -218,6 +218,26 @@ def book_add(request):
     }
     return render(request, 'library/book_form.html', context)
 
+def book_edit(request, slug):
+    book = get_object_or_404(Book, slug=slug)
+    if request.method == 'POST':
+        form = BookForm(request.POST, instance=book)
+        if form.is_valid():
+            book = form.save()
+            messages.success(request, f'Book "{book.title}" has been updated successfully!')
+            return redirect('book_detail', slug=book.slug)
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = BookForm(instance=book)
+    
+    context = {
+        'form': form,
+        'title': f'Edit Book - {book.title}',
+        'book': book
+    }
+    return render(request, 'library/book_form.html', context)
+
 def member_add(request):
     return render(request, 'library/member_form.html')
 
@@ -236,6 +256,26 @@ def author_add(request):
     context = {
         'form': form,
         'title': 'Add New Author'
+    }
+    return render(request, 'library/author_form.html', context)
+
+def author_edit(request, pk):
+    author = get_object_or_404(Author, pk=pk)
+    if request.method == 'POST':
+        form = AuthorForm(request.POST, instance=author)
+        if form.is_valid():
+            author = form.save()
+            messages.success(request, f'Author "{author.name}" has been updated successfully!')
+            return redirect('author_list')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = AuthorForm(instance=author)
+    
+    context = {
+        'form': form,
+        'title': f'Edit Author - {author.name}',
+        'author': author
     }
     return render(request, 'library/author_form.html', context)
 

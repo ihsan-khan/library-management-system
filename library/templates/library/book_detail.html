@@ -23,11 +23,14 @@
                 </div>
                 <div class="col-md-4 text-end">
                     {% if is_available %}
-                        <a href="{% url 'loan_issue' %}?book={{ book.id }}" class="btn btn-success btn-custom me-2">
+                        <a href="{{ url_for('loan_issue') }}?book={{ book.id }}" class="btn btn-success btn-custom me-2">
                             <i class="bi bi-arrow-up-circle"></i> Issue Book
                         </a>
                     {% endif %}
-                    <a href="{% url 'book_list' %}" class="btn btn-light btn-custom">
+                    <a href="{{ url_for('book_edit', slug=book.slug) }}" class="btn btn-warning btn-custom me-2">
+                        <i class="bi bi-pencil"></i> Edit Book
+                    </a>
+                    <a href="{{ url_for('book_list') }}" class="btn btn-light btn-custom">
                         <i class="bi bi-arrow-left"></i> Back to Books
                     </a>
                 </div>

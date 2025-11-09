@@ -10,13 +10,17 @@
                 <ol class="breadcrumb mb-2 text-white">
                     <li class="breadcrumb-item"><a href="{{ url_for('dashboard') }}" class="text-white-50">Dashboard</a></li>
                     <li class="breadcrumb-item"><a href="{{ url_for('author_list') }}" class="text-white-50">Authors</a></li>
-                    <li class="breadcrumb-item active text-white">Add Author</li>
+                    <li class="breadcrumb-item active text-white">{% if author %}Edit Author{% else %}Add Author{% endif %}</li>
                 </ol>
             </nav>
             <h1 class="mb-0">
-                <i class="bi bi-person-plus"></i> {{ title|default("Add New Author") }}
+                {% if author %}
+                    <i class="bi bi-pencil"></i> {{ title|default("Edit Author") }}
+                {% else %}
+                    <i class="bi bi-person-plus"></i> {{ title|default("Add New Author") }}
+                {% endif %}
             </h1>
-            <p class="mb-0 mt-2">Add a new author to your library database</p>
+            <p class="mb-0 mt-2">{% if author %}Update author information in your library database{% else %}Add a new author to your library database{% endif %}</p>
         </div>
     </div>
 
@@ -103,7 +107,11 @@
                     <div class="card-body">
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-success btn-lg">
-                                <i class="bi bi-check-circle"></i> Add Author
+                                {% if author %}
+                                    <i class="bi bi-check-circle"></i> Update Author
+                                {% else %}
+                                    <i class="bi bi-check-circle"></i> Add Author
+                                {% endif %}
                             </button>
                             <a href="{{ url_for('author_list') }}" class="btn btn-secondary">
                                 <i class="bi bi-arrow-left"></i> Cancel & Go Back
